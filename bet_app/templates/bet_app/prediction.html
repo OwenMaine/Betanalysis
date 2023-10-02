@@ -1,0 +1,34 @@
+<!-- This is the prediction template that displays the predictions for a selected match -->
+<!-- It is stored in templates/bet_app/prediction.html -->
+{% extends 'bet_app/base.html' %}
+{% block content %}
+<div class="ui segment">
+  <h3 class="ui header">Predictions for {{ prediction.match }}</h3>
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Prediction</th>
+        <th>Confidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Display the predictions for over/under goals and more corners -->
+      <tr>
+        <td>Over/Under Goals</td>
+        <td>{{ prediction.over_under_goals_type }} {{ prediction.over_under_goals_value }}</td>
+        <td>{{ prediction.over_under_goals_confidence }}%</td>
+      </tr>
+      <tr>
+        <td>More Corners</td>
+        <td>{{ prediction.more_corners_type }}: {{ prediction.more_corners_value }}</td>
+        <td>{{ prediction.more_corners_confidence }}%</td>
+      </tr>      
+    </tbody>    
+  </table>
+
+  <!-- Display a button to go back to the match page -->
+  <a href="{% url 'match' prediction.match.id %}" class="ui negative button">Go Back</a>
+
+</div>
+{% endblock %}

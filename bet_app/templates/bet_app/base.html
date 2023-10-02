@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analytics and Predictions</title>
+  <!-- Link the Semantic UI CSS file from a CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <!-- Link your own CSS file from the static directory -->
+  <link rel="stylesheet" href="{% static 'bet_app/Style.css' %}">
+</head>
+<body>
+  <div class="ui container">
+    <!-- This is the header section that contains the logo and the title of your app -->
+    <div class="ui segment">
+      <h1 class="ui header">
+        <img src="{% static 'bet_app/SwiftBet.png' %}" alt="logo">
+        Analytics and Predictions
+      </h1>
+    </div>
+    <!-- This is the content section that will be filled by the child templates -->
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>

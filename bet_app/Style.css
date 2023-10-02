@@ -1,0 +1,86 @@
+img {
+    width: 100px;
+    height: 50px;
+  }
+  
+  /* This is the style.css file of your app */
+/* It defines the style and appearance of your app */
+
+/* Define a global font family and size */
+* {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  /* Define a style for the header */
+  h1 {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Define a style for the logo image */
+  img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  /* Define a style for the cards */
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  /* Define a style for each card */
+  .card {
+    width: 300px;
+    height: 200px;
+    margin: 10px;
+  }
+  
+  /* Define a style for the card image */
+  .card .image {
+    height: 150px;
+  }
+  
+  /* Define a style for the card content */
+  .card .content {
+    height: 50px;
+  }
+  
+  /* Define a style for the card header */
+  .card .header {
+    text-align: center;
+  }
+  
+  /* Define a style for the table */
+  table {
+    width: 100%;
+  }
+  
+  /* Define a style for the table header */
+  table th {
+    text-align: center;
+  }
+  
+  /* Define a style for the table data */
+  table td {
+    text-align: left;
+  }
+  
+  /* Define a style for the action button */
+  table td:last-child {
+    text-align: center;
+  }
+  
+  /* Define a style for the positive button */
+  .positive.button {
+    background-color: green;
+  }
+  
+  /* Define a style for the negative button */
+  .negative.button {
+    background-color: red;
+  }
+  

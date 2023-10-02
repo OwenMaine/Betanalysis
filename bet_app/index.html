@@ -1,0 +1,186 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+  <div class="ui container">
+    <h1 class="ui header">
+        <img src="SwiftBet.png" alt="Swiftbet logo">
+        Analytics and Predictions
+    </h1>
+
+    <p>This application will be able to predict over and under goals in major leagues across football, and also the probability of a team winning more corners based on statistics and head-to-head.</p>
+    <div class="ui segment">
+      <h3 class="ui header">Select a league</h3>
+      <div class="ui form">
+        <div class="field">
+          <select id="league" onchange="showMatches()">
+            <option value="">Choose a league</option>
+            <option value="EPL">English Premier League</option>
+            <option value="LaLiga">Spanish La Liga</option>
+            <option value="Bundesliga">German Bundesliga</option>
+            <option value="SerieA">Italian Serie A</option>
+            <option value="Ligue1">French Ligue 1</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="ui segment" id="matches" style="display: none;">
+      <h3 class="ui header">Select a match</h3>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Home Team</th>
+            <th>Away Team</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="match-list">
+          <!-- This will be populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+    <div class="ui segment" id="predictions" style="display: none;">
+      <h3 class="ui header">Predictions for the selected match</h3>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Prediction</th>
+            <th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody id="prediction-list">
+          <!-- This will be populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- This is a dummy script to generate some random predictions -->
+  <!-- You can replace this with your own logic -->
+  <script>
+
+    // A list of dummy matches for each league
+    var matches = {
+      "EPL": [
+        {home: "Manchester United", away: "Liverpool", date: "2023-09-30", time: "12:30"},
+        {home: "Chelsea", away: "Manchester City", date: "2023-09-30", time: "15:00"},
+        {home: "Arsenal", away: "Tottenham Hotspur", date: "2023-10-01", time: "16:30"}
+      ],
+      "LaLiga": [
+        {home: "Real Madrid", away: "Barcelona", date: "2023-10-01", time: "20:00"},
+        {home: "Atletico Madrid", away: "Sevilla", date: "2023-10-02", time: "18:00"},
+        {home: "Valencia", away: "Villarreal", date: "2023-10-02", time: "21:00"}
+      ],
+      "Bundesliga": [
+        {home: "Bayern Munich", away: "Borussia Dortmund", date: "2023-09-30", time: "19:30"},
+        {home: "RB Leipzig", away: "Bayer Leverkusen", date: "2023-10-01", time: "14:30"},
+        {home: "Borussia Monchengladbach", away: "Wolfsburg", date: "2023-10-01", time: "17:30"}
+      ],
+      "SerieA": [
+        {home: "Juventus", away: "Napoli", date: "2023-09-30", time: "20:45"},
+        {home: "AC Milan", away: "Inter Milan", date: "2023-10-01", time: "18:00"},
+        {home: "Roma", away: "Lazio", date: "2023-10-01", time: "20:45"}
+      ],
+      "Ligue1": [
+        {home: "Paris Saint-Germain", away: "Marseille", date: "2023-10-01", time: "21:00"},
+        {home: "Monaco", away: "Lyon", date: "2023-10-02", time: "15:00"},
+        {home: "Lille", away: "Nice", date: "2023-10-02", time: "17:00"}
+      ]
+    };
+
+    // A function to show the matches for the selected league
+    function showMatches() {
+      var league = document.getElementById("league").value;
+      var matchList = document.getElementById("match-list");
+      var matchesDiv = document.getElementById("matches");
+      var predictionsDiv = document.getElementById("predictions");
+      matchList.innerHTML = ""; // Clear the previous matches
+      predictionsDiv.style.display = "none"; // Hide the predictions
+      if (league) {
+        // Show the matches for the selected league
+        matchesDiv.style.display = "block";
+        var matchData = matches[league];
+        for (var i = 0; i < matchData.length; i++) {
+          var match = matchData[i];
+          var row = document.createElement("tr");
+          var homeCell = document.createElement("td");
+          homeCell.textContent = match.home;
+          var awayCell = document.createElement("td");
+          awayCell.textContent = match.away;
+          var dateCell = document.createElement("td");
+          dateCell.textContent = match.date;
+          var timeCell = document.createElement("td");
+          timeCell.textContent = match.time;
+          var actionCell = document.createElement("td");
+          var button = document.createElement("button");
+          button.className = "ui primary button";
+          button.textContent = "Predict";
+          button.onclick = function(match) {
+            return function() {
+              showPredictions(match);
+            };
+          }(match);
+          actionCell.appendChild(button);
+          row.appendChild(homeCell);
+          row.appendChild(awayCell);
+          row.appendChild(dateCell);
+          row.appendChild(timeCell);
+          row.appendChild(actionCell);
+          matchList.appendChild(row);
+        }
+      } else {
+        // Hide the matches
+        matchesDiv.style.display = "none";
+      }
+    }
+
+    // A function to show the predictions for the selected match
+    function showPredictions(match) {
+      var predictionList = document.getElementById("prediction-list");
+      var predictionsDiv = document.getElementById("predictions");
+      predictionList.innerHTML = ""; // Clear the previous predictions
+      predictionsDiv.style.display = "block";
+      // Generate some random predictions for the selected match
+      var overUnderGoals = Math.random() < 0.5 ? "Over 2.5" : "Under 2.5";
+      var overUnderGoalsConfidence = Math.floor(Math.random() * 100) + "%";
+      var moreCornersHomeProb = Math.floor(Math.random() * 100) + "%";
+      var moreCornersAwayProb = Math.floor(Math.random() * 100) + "%";
+      // Create a table row for each prediction
+      var overUnderGoalsRow = document.createElement("tr");
+      var overUnderGoalsTypeCell = document.createElement("td");
+      overUnderGoalsTypeCell.textContent = "Over/Under Goals";
+      var overUnderGoalsPredCell = document.createElement("td");
+      overUnderGoalsPredCell.textContent = overUnderGoals;
+      var overUnderGoalsConfCell = document.createElement("td");
+      overUnderGoalsConfCell.textContent = overUnderGoalsConfidence;
+      overUnderGoalsRow.appendChild(overUnderGoalsTypeCell);
+      overUnderGoalsRow.appendChild(overUnderGoalsPredCell);
+      overUnderGoalsRow.appendChild(overUnderGoalsConfCell);
+
+      var moreCornersRow = document.createElement("tr");
+      var moreCornersTypeCell = document.createElement("td");
+      moreCornersTypeCell.textContent = "More Corners";
+      var moreCornersPredCell = document.createElement("td");
+      moreCornersPredCell.innerHTML =
+        "<b>" + match.home + "</b>: " + moreCornersHomeProb + "<br>" +
+        "<b>" + match.away + "</b>: " + moreCornersAwayProb;
+      var moreCornersConfCell = document.createElement("td");
+      moreCornersConfCell.textContent = "-";
+      moreCornersRow.appendChild(moreCornersTypeCell);
+      moreCornersRow.appendChild(moreCornersPredCell);
+      moreCornersRow.appendChild(moreCornersConfCell);
+
+      predictionList.appendChild(overUnderGoalsRow);
+      predictionList.appendChild(moreCornersRow);
+
+    }
+
+  </script>
+</body>
+</html>

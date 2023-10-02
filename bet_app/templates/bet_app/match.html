@@ -1,0 +1,28 @@
+<!-- This is the match template that displays the details of a selected match -->
+<!-- It is stored in templates/bet_app/match.html -->
+{% extends 'bet_app/base.html' %}
+{% block content %}
+<div class="ui segment">
+  <h3 class="ui header">Match Details</h3>
+  <table class="ui definition table">
+    <tbody>
+      <!-- Display the match details such as league, teams, date, and time -->
+      <tr><td>League</td><td>{{ match.league.name }}</td></tr>
+      <tr><td>Home Team</td><td>{{ match.home_team }}</td></tr>
+      <tr><td>Away Team</td><td>{{ match.away_team }}</td></tr>
+      <tr><td>Date</td><td>{{ match.date }}</td></tr>
+      <tr><td>Time</td><td>{{ match.time }}</td></tr>      
+    </tbody>    
+  </table>
+
+  <!-- Display a button to view the predictions for the match -->
+  <!-- The button should only be enabled if there is a prediction for the match in the database -->
+  {% if match.prediction_set.exists %}
+  {% with prediction=match.prediction_set.first %}
+  <a href="{% url 'prediction' prediction.id %}" class="ui positive button">View Predictions</a>
+  {% endwith %}
+  {% else %}
+  <button class="ui disabled button">View Predictions</button>
+  {% endif %}
+</div>
+{% endblock %}

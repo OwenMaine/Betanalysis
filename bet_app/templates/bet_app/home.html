@@ -1,0 +1,22 @@
+<!-- This is the home template that displays the list of leagues -->
+<!-- It is stored in templates/bet_app/home.html -->
+{% extends 'bet_app/base.html' %}
+{% block content %}
+<div class="ui segment">
+  <h3 class="ui header">Select a league</h3>
+  <div class="ui cards">
+  
+    <!-- Loop through the leagues and display their name and image -->
+    {% for league in leagues %}
+    <div class="card">
+      <div class="image">
+        <img src="{{ league.image.url }}" alt="{{ league.name }}">
+      </div>
+      <div class="content">
+        <a href="{% url 'league' league.id %}" class="header">{{ league.name }}</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

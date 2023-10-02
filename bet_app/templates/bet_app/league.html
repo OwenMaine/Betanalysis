@@ -1,0 +1,31 @@
+<!-- This is the league template that displays the list of matches for a selected league -->
+<!-- It is stored in templates/bet_app/league.html -->
+{% extends 'bet_app/base.html' %}
+{% block content %}
+<div class="ui segment">
+  <h3 class="ui header">Select a match</h3>
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>Home Team</th>
+        <th>Away Team</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through the matches and display their details and a predict button -->
+      {% for match in matches %}
+      <tr>
+        <td>{{ match.home_team }}</td>
+        <td>{{ match.away_team }}</td>
+        <td>{{ match.date }}</td>
+        <td>{{ match.time }}</td>
+        <td><a href="{% url 'match' match.id %}" class="ui primary button">Predict</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
